@@ -5,9 +5,9 @@
 1. Run `make` in `library` folder. This will create static and dynamic libraries in `library/bin` folder.
 2. Run `make` in `example` folder. This will create `cjpeg` and `djpeg` executables in `example/bin` folder.
 
-## Examples of compiling without make
+### Examples of compiling without make
 
-### How to complile cjpeg.c with static library?
+#### How to complile cjpeg.c with static library?
 
 1. Compile static library
     ```
@@ -15,7 +15,7 @@
     gcc -c *.c -O3
     ar rcs libjpeg.a *.o
     ```
-2. Compile cjpeg.c and cdjpeg.c
+2. Compile `cjpeg.c` and `cdjpeg.c`
     ```
     # in example folder
     gcc -c cjpeg.c cdjpeg.c -I ../library -O3
@@ -26,7 +26,7 @@
     gcc cdjpeg.o cjpeg.o -o cjpeg_stat -L ../library -l jpeg -O3
     ```
 
-### How to compile cjpeg.c with dynamic library?
+#### How to compile cjpeg.c with dynamic library?
 
 1. Compile dynamic library
     ```
@@ -34,7 +34,7 @@
     gcc -c *.c -O3 -fPIC
     gcc -shared *.o -O3 -fPIC -o libjpeg.so
     ```
-2. Compile cjpeg.c and cdjpeg.c
+2. Compile `cjpeg.c` and `cdjpeg.c`
     ```
     # in example folder
     gcc -c cjpeg.c cdjpeg.c -I ../library -O3
@@ -45,6 +45,6 @@
     gcc cdjpeg.o cjpeg.o -o cjpeg_dyn -L ../library -l jpeg -O3 -Wl,-rpath,\$ORIGIN/../library
     ```
 
-#### Remarks:
-- In these examples bin and obj folders aren't used
-- Replace cjpeg.c with djpeg.c everywhere if you want to compile djpeg.c
+##### Remarks:
+- In these examples `bin` and `obj` folders aren't used
+- Replace `cjpeg.c` with `djpeg.c` everywhere if you want to compile `djpeg.c`
