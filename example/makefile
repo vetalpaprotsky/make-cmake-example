@@ -32,4 +32,4 @@ $(OBJ_DIR)/%.o: %.c
 .PHONY : clean create_dirs cjpeg djpeg
 
 clean:
-	rm -rf $(OBJ_DIR)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)

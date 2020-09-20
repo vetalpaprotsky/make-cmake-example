@@ -42,4 +42,4 @@ $(OBJ_DIR_DYN)/%.o: %.c
 .PHONY : clean create_dirs static_lib dynamic_lib
 
 clean:
-	rm -rf $(OBJ_DIR_STC) $(OBJ_DIR_DYN)
+	rm -rf $(OBJ_DIR_STC) $(OBJ_DIR_DYN) $(BIN_DIR)
