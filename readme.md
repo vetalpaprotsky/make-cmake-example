@@ -1,4 +1,11 @@
-## Compiling using command line examples
+# JPEG library
+
+## Instructions
+
+1. Run `make` in `library` folder. This will create static and dynamic libraries in `library/bin` folder.
+2. Run `make` in `example` folder. This will create `cjpeg` and `djpeg` executables in `example/bin` folder.
+
+## Examples of compiling without make
 
 ### How to complile cjpeg.c with static library?
 
@@ -16,7 +23,7 @@
 3. Create executable
     ```
     # in example folder
-    gcc cdjpeg.o cjpeg.o -o prog_stat -L ../library -l jpeg -O3
+    gcc cdjpeg.o cjpeg.o -o cjpeg_stat -L ../library -l jpeg -O3
     ```
 
 ### How to compile cjpeg.c with dynamic library?
@@ -35,7 +42,7 @@
 3. Create executable
     ```
     # in example folder
-    gcc cdjpeg.o cjpeg.o -o prog_dyn -L ../library -l jpeg -O3 -Wl,-rpath,\$ORIGIN/../library
+    gcc cdjpeg.o cjpeg.o -o cjpeg_dyn -L ../library -l jpeg -O3 -Wl,-rpath,\$ORIGIN/../library
     ```
 
 #### Remarks:
