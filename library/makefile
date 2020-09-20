@@ -8,9 +8,9 @@ LIB_EXT_DYN ?= .so
 BIN_DIR = bin
 OBJ_DIR_STC = obj_stc
 OBJ_DIR_DYN = obj_dyn
-SOURCES = $(wildcard *.c)
-OBJS_STC = $(patsubst %.c,$(OBJ_DIR_STC)/%.o,$(SOURCES))
-OBJS_DYN = $(patsubst %.c,$(OBJ_DIR_DYN)/%.o,$(SOURCES))
+SOURCES := $(wildcard *.c)
+OBJS_STC := $(patsubst %.c,$(OBJ_DIR_STC)/%.o,$(SOURCES))
+OBJS_DYN := $(patsubst %.c,$(OBJ_DIR_DYN)/%.o,$(SOURCES))
 
 all: create_dirs static_lib dynamic_lib
 

@@ -5,8 +5,8 @@ BIN_DIR = bin
 OBJ_DIR = obj
 CJPEG_SOURCES = cjpeg.c cdjpeg.c
 DJPEG_SOURCES = djpeg.c cdjpeg.c
-CJPEG_OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(CJPEG_SOURCES))
-DJPEG_OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(DJPEG_SOURCES))
+CJPEG_OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(CJPEG_SOURCES))
+DJPEG_OBJS := $(patsubst %.c,$(OBJ_DIR)/%.o,$(DJPEG_SOURCES))
 
 all: create_dirs cjpeg djpeg
 
