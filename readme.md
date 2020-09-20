@@ -1,4 +1,4 @@
-## Examples
+## Compiling using command line examples
 
 ### How to complile cjpeg.c with static library?
 

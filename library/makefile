@@ -1,34 +1,45 @@
 CC ?= gcc
-CFLAGS ?= -O3
-LDFLAGS ?= -O3
+CFLAGS_STC ?= -O3
+CFLAGS_DYM ?= -O3 -fPIC
+LDFLAGS_DYN ?= -O3 -fPIC
 LIB_NAME = libjpeg
-STAT_LIB_NAME = $(LIB_NAME).a
-DYN_LIB_EXT = .so
-DYN_LIB_NAME = $(LIB_NAME)$(DYN_LIB_EXT)
+LIB_EXT_STC ?= .a
+LIB_EXT_DYN ?= .so
 BIN_DIR = bin
-OBJ_DIR = obj
+OBJ_DIR_STC = obj_stc
+OBJ_DIR_DYN = obj_dyn
 SOURCES = $(wildcard *.c)
-OBJS = $(patsubst %.c,$(OBJ_DIR)/%.o,$(SOURCES))
+OBJS_STC = $(patsubst %.c,$(OBJ_DIR_STC)/%.o,$(SOURCES))
+OBJS_DYN = $(patsubst %.c,$(OBJ_DIR_DYN)/%.o,$(SOURCES))
 
-# There should be different obj folders for static and dynamic libs
-# Dynamic lib should be compilied with gcc and -fPIC option (also for linker)
-
-all: create_dirs $(BIN_DIR)/$(STAT_LIB_NAME) # $(BIN_DIR)/$(DYN_LIB_NAME)
+all: create_dirs static_lib dynamic_lib
 
 create_dirs:
 	mkdir -p $(BIN_DIR)
-	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR_STC)
+	mkdir -p $(OBJ_DIR_DYN)
 
-$(BIN_DIR)/$(STAT_LIB_NAME): $(OBJS)
-	ar rcs $@ $^
+static_lib: $(OBJS_STC)
+	ar rcs $(BIN_DIR)/$(LIB_NAME)$(LIB_EXT_STC) $^
 
--include $(OBJS:.o=.d)
+dynamic_lib: $(OBJS_DYN)
+	$(CC) -shared -o $(BIN_DIR)/$(LIB_NAME)$(LIB_EXT_DYN) $^ $(LDFLAGS_DYN)
 
-$(OBJ_DIR)/%.o: %.c
-	$(CC) -c $(CFLAGS) $< -o $@
-	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR)/$*.d $(CFLAGS) $<
+# Include target dependencies
+-include $(OBJS_STC:.o=.d)
+-include $(OBJS_DYN:.o=.d)
+
+# Compile .c file(for static library) and generate its dependencies in .d file
+$(OBJ_DIR_STC)/%.o: %.c
+	$(CC) -c $(CFLAGS_STC) $< -o $@
+	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR_STC)/$*.d $(CFLAGS_STC) $<
+
+# Compile .c file(for dynamic library) and generate its dependencies in .d file
+$(OBJ_DIR_DYN)/%.o: %.c
+	$(CC) -c $(CFLAGS_DYM) $< -o $@
+	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR_DYN)/$*.d $(CFLAGS_DYM) $<
 
 .PHONY : clean create_dirs
 
 clean:
-	rm -rf $(OBJ_DIR)/*.o $(OBJ_DIR)/*.d $(BIN_DIR)/$(STAT_LIB_NAME)
+	rm -rf $(OBJ_DIR_STC) $(OBJ_DIR_DYN)
