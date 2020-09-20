@@ -1,6 +1,6 @@
 CC ?= gcc
-CFLAGS_STC ?= -O3
-CFLAGS_DYM ?= -O3 -fPIC
+CCFLAGS_STC ?= -O3
+CCFLAGS_DYM ?= -O3 -fPIC
 LDFLAGS_DYN ?= -O3 -fPIC
 LIB_NAME = libjpeg
 LIB_EXT_STC ?= .a
@@ -23,7 +23,7 @@ static_lib: $(OBJS_STC)
 	ar rcs $(BIN_DIR)/$(LIB_NAME)$(LIB_EXT_STC) $^
 
 dynamic_lib: $(OBJS_DYN)
-	$(CC) -shared -o $(BIN_DIR)/$(LIB_NAME)$(LIB_EXT_DYN) $^ $(LDFLAGS_DYN)
+	$(CC) -shared $^ -o $(BIN_DIR)/$(LIB_NAME)$(LIB_EXT_DYN) $(LDFLAGS_DYN)
 
 # Include target dependencies
 -include $(OBJS_STC:.o=.d)
@@ -31,15 +31,15 @@ dynamic_lib: $(OBJS_DYN)
 
 # Compile .c file(for static library) and generate its dependencies in .d file
 $(OBJ_DIR_STC)/%.o: %.c
-	$(CC) -c $(CFLAGS_STC) $< -o $@
-	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR_STC)/$*.d $(CFLAGS_STC) $<
+	$(CC) -c $< $(CCFLAGS_STC) -o $@
+	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR_STC)/$*.d $(CCFLAGS_STC) $<
 
 # Compile .c file(for dynamic library) and generate its dependencies in .d file
 $(OBJ_DIR_DYN)/%.o: %.c
-	$(CC) -c $(CFLAGS_DYM) $< -o $@
-	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR_DYN)/$*.d $(CFLAGS_DYM) $<
+	$(CC) -c $< $(CCFLAGS_DYM) -o $@
+	$(CC) -MM -MP -MT $@ -MF $(OBJ_DIR_DYN)/$*.d $(CCFLAGS_DYM) $<
 
-.PHONY : clean create_dirs
+.PHONY : clean create_dirs static_lib dynamic_lib
 
 clean:
 	rm -rf $(OBJ_DIR_STC) $(OBJ_DIR_DYN)
