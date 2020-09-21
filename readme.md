@@ -6,7 +6,7 @@
     # in library folder
     mkdir build
     cd build
-    cmake .. -DCMAKE_INSTALL_PREFIX=../../jpeg
+    cmake .. -G"Unix Makefiles" -DCMAKE_INSTALL_PREFIX=../../jpeg
     ```
 2. Install library
     ```
@@ -18,8 +18,8 @@
     # in example folder
     mkdir build
     cd build
-    # $(pwd)/../../jpeg is the full path to jpeg library
-    cmake .. -Djpeg_PREFIX=$(pwd)/../../jpeg
+    # Djpeg_PREFIX should specify the full path to jpeg library
+    cmake .. -G"Unix Makefiles" -Djpeg_PREFIX=$(pwd)/../../jpeg
 4. Create executables
     ```
     # in example/build folder
