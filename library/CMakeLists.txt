@@ -12,6 +12,7 @@ endif()
 
 add_library(jpeg SHARED ${jpeg_LIBRARY_SOURCES} ${jpeg_LIBRARY_HEADERS})
 add_library(jpeg_static STATIC ${jpeg_LIBRARY_SOURCES} ${jpeg_LIBRARY_HEADERS})
+set_target_properties(jpeg_static PROPERTIES OUTPUT_NAME jpeg)
 
 SET(jpeg_INCLUDE_PATH "include")
 
