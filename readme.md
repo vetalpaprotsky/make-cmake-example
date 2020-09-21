@@ -18,10 +18,12 @@
     # in example folder
     mkdir build
     cd build
-    # $(pwd)/../../jpeg is the full path to jpeg libarary
+    # $(pwd)/../../jpeg is the full path to jpeg library
     cmake .. -Djpeg_PREFIX=$(pwd)/../../jpeg
+4. Create executables
+    ```
+    # in example/build folder
     make
-    # now cjpeg and djpeg executables should be in example/build folder
     ```
 
 ## Make instructions
@@ -61,7 +63,7 @@
     # in example folder
     gcc -c cjpeg.c cdjpeg.c -I ../library -O3
     ```
-3. Create executable
+3. Create executables
     ```
     # in example folder
     gcc cdjpeg.o cjpeg.o -o cjpeg_dyn -L ../library -l jpeg -O3 -Wl,-rpath,\$ORIGIN/../library
